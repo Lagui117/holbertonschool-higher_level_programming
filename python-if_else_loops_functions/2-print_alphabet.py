@@ -4,4 +4,4 @@ alphabet = ""
 while i < 123:
     alphabet = alphabet + chr(i)
     i += 1
-print(f"{alphabet}")
+print("{}".format(alphabet))
