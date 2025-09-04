@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 i = 97
+alphabet = ""
 while i < 123:
-    print(chr(i))
+    alphabet = alphabet + chr(i)
     i += 1
+print(f"{alphabet}")
