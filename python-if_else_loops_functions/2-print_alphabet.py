@@ -1,7 +1,3 @@
 #!/usr/bin/python3
-i = 97
-alphabet = ""
-while i < 123:
-    alphabet = alphabet + chr(i)
-    i += 1
-print("{}".format(alphabet))
+for i in range(97, 123):
+    print("{}".format(chr(i)), end="")
