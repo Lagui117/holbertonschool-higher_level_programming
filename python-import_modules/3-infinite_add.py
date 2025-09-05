@@ -8,4 +8,3 @@ if __name__ == "__main__":
         total_of_arguments += int(sys.argv[i])
         i += 1
     print("{}".format(total_of_arguments))
-
