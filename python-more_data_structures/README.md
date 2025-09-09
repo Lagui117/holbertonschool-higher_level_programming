@@ -1,0 +1,1 @@
+rojet Holberton : Python - Data Structures: Lists, Tuples. Découverte et manipulation des listes, tuples et séquences. Apprentissage des méthodes courantes, list comprehensions, piles, files et gestion de la mémoire avec del.
