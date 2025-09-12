@@ -1,0 +1,2 @@
+# Python - Test-driven development  
+Projet visant à apprendre le TDD en Python : écrire les tests avant le code, utiliser doctest et unittest, valider les entrées et gérer les erreurs. Chaque fonction est documentée et testée.
