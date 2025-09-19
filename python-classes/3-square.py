@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-"""Module 2-square: defines a Square with validated size."""
+"""3-square module: defines a Square with validated size and area()."""
 
 
 class Square:
-    """Square class with a private size attribute."""
+    """Represent a square with a private size attribute."""
 
     def __init__(self, size=0):
         """Initialize a Square.
@@ -20,6 +20,7 @@ class Square:
         if size < 0:
             raise ValueError("size must be >= 0")
         self.__size = size
+
     def area(self):
-       return self.__size * self.__size
-    
+        """Return the current square area."""
+        return self.__size * self.__size
