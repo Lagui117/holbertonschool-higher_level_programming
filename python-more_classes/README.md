@@ -1,0 +1,2 @@
+This project focuses on advanced object-oriented programming concepts in Python, especially classes.
+It covers class vs instance attributes, properties, __str__, __repr__, __del__, classmethods, staticmethods, and more.
