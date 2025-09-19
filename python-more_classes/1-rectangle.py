@@ -1,12 +1,20 @@
 #!/usr/bin/python3
-"""Module 1-rectangle: defines a Rectangle with validated width/height."""
+"""Module 1-rectangle.
+
+Defines a Rectangle with validated width and height.
+"""
 
 
 class Rectangle:
-    """Defines a rectangle with private width and height."""
+    """Rectangle with private width/height and property accessors."""
 
     def __init__(self, width=0, height=0):
-        """Initialize a Rectangle with optional width and height."""
+        """Initialize a Rectangle.
+
+        Args:
+            width (int): rectangle width (default 0)
+            height (int): rectangle height (default 0)
+        """
         self.width = width
         self.height = height
 
@@ -27,4 +35,13 @@ class Rectangle:
     @property
     def height(self):
         """Retrieve the height."""
-        return self.__
+        return self.__height
+
+    @height.setter
+    def height(self, value):
+        """Set the height with validations."""
+        if not isinstance(value, int):
+            raise TypeError("height must be an integer")
+        if value < 0:
+            raise ValueError("height must be >= 0")
+        self.__height = value
