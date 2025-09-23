@@ -1,0 +1,2 @@
+Implement MyList, a subclass of list with print_sorted() that prints the list in ascending order without modifying it. Follow shebang, docstrings, pycodestyle; no imports.
+Run tests: python3 -m doctest ./tests/*.
