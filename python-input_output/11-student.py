@@ -1,8 +1,12 @@
 #!/usr/bin/python3
+"""Define a Student class with JSON (de)serialization helpers."""
+ 
+
 class Student:
-    """Define a student with JSON (de)serialization helpers."""
+    """Student with public attributes and JSON-friendly methods."""
 
     def __init__(self, first_name, last_name, age):
+        """Initialize a student."""
         self.first_name = first_name
         self.last_name = last_name
         self.age = age
@@ -10,7 +14,7 @@ class Student:
     def to_json(self, attrs=None):
         """Return a dict representation of the instance.
 
-        If attrs is a list of strings, only those attributes (if present) are included.
+        If attrs is a list of strings, return only those attributes present.
         Otherwise, return all public attributes.
         """
         if isinstance(attrs, list) and all(isinstance(a, str) for a in attrs):

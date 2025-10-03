@@ -1,7 +1,9 @@
 #!/usr/bin/python3
+"""Add all CLI arguments to a list and save to add_item.json."""
 import sys
-from 5-save_to_json_file import save_to_json_file
-from 6-load_from_json_file import load_from_json_file
+
+save_to_json_file = __import__('5-save_to_json_file').save_to_json_file
+load_from_json_file = __import__('6-load_from_json_file').load_from_json_file
 
 FILENAME = "add_item.json"
 
@@ -10,5 +12,5 @@ try:
 except FileNotFoundError:
     items = []
 
-items += sys.argv[1:]
+items.extend(sys.argv[1:])
 save_to_json_file(items, FILENAME)
