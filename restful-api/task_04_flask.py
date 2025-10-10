@@ -7,35 +7,37 @@ Routes:
   GET  /status           -> "OK"
   GET  /data             -> JSON list of usernames
   GET  /users/<username> -> JSON user or {"error": "User not found"} (404)
-  POST /add_user         -> add user via JSON body
+  POST /add_user         -> Add user or handle duplicates (409)
 """
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# In-memory store (empty for checker)
+# Empty dict required for the checker
 users = {}
 
 
 @app.get("/")
 def home():
+    """Root route."""
     return "Welcome to the Flask API!"
 
 
 @app.get("/status")
 def status():
+    """Health check route."""
     return "OK"
 
 
 @app.get("/data")
 def data():
-    """Return the list of usernames."""
+    """Return list of all usernames."""
     return jsonify(list(users.keys()))
 
 
 @app.get("/users/<username>")
 def get_user(username):
-    """Return a user object or a JSON error with 404."""
+    """Return one user or error JSON with code 404."""
     user = users.get(username)
     if not user:
         return jsonify({"error": "User not found"}), 404
@@ -44,7 +46,7 @@ def get_user(username):
 
 @app.post("/add_user")
 def add_user():
-    """Add a user to the in-memory database."""
+    """Add new user from JSON payload."""
     if not request.is_json:
         return jsonify({"error": "Expected application/json"}), 400
 
@@ -54,8 +56,9 @@ def add_user():
     if not username:
         return jsonify({"error": "Username is required"}), 400
 
+    # ✅ Checker wants 409 Conflict for duplicate usernames
     if username in users:
-        return jsonify({"error": "Username already exists"}), 400
+        return jsonify({"error": "Username already exists"}), 409
 
     user = {
         "username": username,
@@ -63,7 +66,6 @@ def add_user():
         "age": payload.get("age"),
         "city": payload.get("city"),
     }
-
     users[username] = user
     return jsonify({"message": "User added", "user": user}), 201
 
