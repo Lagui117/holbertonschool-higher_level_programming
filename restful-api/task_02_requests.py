@@ -2,74 +2,49 @@
 """
 Task 02 - Consume and process data from an API using Python (requests).
 
+Functions:
 - fetch_and_print_posts(): GET all posts, print Status Code and each title.
 - fetch_and_save_posts(): GET all posts, save id/title/body to posts.csv.
 """
-from typing import List, Dict
+import requests
 import csv
-import sys
 
-try:
-    import requests
-except Exception as e:
-    print(
-        "Missing dependency 'requests'. Run: pip install requests",
-        file=sys.stderr,
-    )
-    raise e
 
 API_URL = "https://jsonplaceholder.typicode.com/posts"
 
 
-def fetch_and_print_posts() -> None:
-    """Fetch posts and print status code then all titles."""
-    resp = requests.get(API_URL, timeout=10)
-    print(f"Status Code: {resp.status_code}")
-    if resp.ok:
-        try:
-            data = resp.json()
-        except ValueError:
-            print("Error: Response is not JSON")
-            return
-        for post in data:
-            title = post.get("title")
-            if title is not None:
-                print(title)
-
-
-def fetch_and_save_posts(filename: str = "posts.csv") -> None:
-    """Fetch posts and save id/title/body to CSV."""
-    resp = requests.get(API_URL, timeout=10)
-    if not resp.ok:
-        print(
-            f"Error: GET {API_URL} -> {resp.status_code}",
-            file=sys.stderr,
-        )
-        return
-
+def fetch_and_print_posts():
+    """Fetch posts and print status code and all titles."""
     try:
-        data = resp.json()
-    except ValueError:
-        print("Error: Response is not JSON", file=sys.stderr)
-        return
-
-    rows: List[Dict[str, str]] = []
-    for post in data:
-        rows.append(
-            {
-                "id": str(post.get("id")),
-                "title": str(post.get("title")),
-                "body": str(post.get("body")),
-            }
-        )
-
-    fieldnames = ["id", "title", "body"]
-    with open(filename, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(rows)
+        response = requests.get(API_URL)
+        print(f"Status Code: {response.status_code}")
+        if response.status_code == 200:
+            posts = response.json()
+            for post in posts:
+                print(post.get("title"))
+        else:
+            print("Fetch failed")
+    except Exception:
+        print("Fetch failed")
 
 
-if __name__ == "__main__":
-    fetch_and_print_posts()
-    fetch_and_save_posts()
+def fetch_and_save_posts():
+    """Fetch posts and save id, title, body to posts.csv."""
+    try:
+        response = requests.get(API_URL)
+        if response.status_code == 200:
+            posts = response.json()
+            with open("posts.csv", "w", newline="", encoding="utf-8") as csvfile:
+                fieldnames = ["id", "title", "body"]
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                writer.writeheader()
+                for post in posts:
+                    writer.writerow({
+                        "id": post.get("id"),
+                        "title": post.get("title"),
+                        "body": post.get("body")
+                    })
+        else:
+            print("Fetch failed")
+    except Exception:
+        print("Fetch failed")
